@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NTE Bond Guide</title>
+<meta name="description" content="Best 100/200/400-bond gift per Neverness to Everness character, Fons cost to max bond, and who to spend free bond on first.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0c10; --surface: #111318; --surface2: #1a1d24;
+  --border: #2a2d35; --accent: #e8b84b; --accent-hover: #f0c860; --accent2: #4b8ee8;
+  --text: #e8eaf0; --muted: #9ba3b4; --success: #4be89a; --danger: #e84b6b;
+  --rank-s: #e8b84b; --rank-a: #934be8; --rank-b: #4b8ee8;
+  --sidebar-w: 225px;
+  --sidebar-w-collapsed: 52px;
+  --screen-base: #0e1015;      /* Pull History backdrop base fill, one step warmer than --bg */
+  --ghost-ink: rgba(255, 255, 255, 0.04);
+}
+.page-header { margin-bottom: 24px; }
+.page-title { font-size: 24px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); }
+.page-sub { font-size: 14px; color: var(--muted); margin-top: 4px; }
+.toggle-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px; font-size: 12px; font-weight: 500; color: var(--muted); cursor: pointer; letter-spacing: 0.5px; text-transform: uppercase; transition: all 0.15s; }
+.toggle-btn.on { border-color: var(--accent); color: var(--accent); background: rgba(232,184,75,0.08); }
+.seg { display: inline-flex; margin-top: 14px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.seg-opt { padding: 9px 22px; font-size: 14px; color: var(--muted); cursor: pointer; user-select: none; border-left: 1px solid var(--border); transition: background 0.12s, color 0.12s; }
+.seg-opt:first-child { border-left: none; }
+.seg-opt:hover { color: var(--text); background: var(--surface2); }
+.seg-opt.active { color: var(--bg); background: var(--accent); font-weight: 600; }
+.seg-opt.active:hover { color: var(--bg); background: var(--accent); }
+.fons-wide-wrap { background: var(--surface); border-radius: 10px; overflow: hidden; max-width: 820px; }
+.fons-eff-tbl { width: 100%; border-collapse: collapse; font-size: 15px; table-layout: fixed; }
+.fons-eff-tbl thead tr { background: var(--surface2); }
+.fons-eff-tbl th { padding: 11px 16px; text-align: right; color: var(--muted); font-weight: 500; font-size: 13px; letter-spacing: 0.5px; text-transform: uppercase; }
+.fons-eff-tbl th:first-child,.fons-eff-tbl td:first-child { width: 34%; text-align: left; }
+.fons-eff-tbl th:nth-child(2),.fons-eff-tbl td:nth-child(2) { width: 12%; }
+.fons-eff-tbl th:nth-child(3),.fons-eff-tbl td:nth-child(3) { width: 18%; }
+.fons-eff-tbl th:nth-child(4),.fons-eff-tbl td:nth-child(4) { width: 18%; }
+.fons-eff-tbl th:last-child,.fons-eff-tbl td:last-child { width: 18%; }
+.fons-eff-tbl td { padding: 11px 16px; border-top: 1px solid var(--border); color: var(--text); text-align: right; }
+.fons-eff-tbl td:first-child { text-align: left; }
+.fons-eff-tbl tr:hover td { background: rgba(255,255,255,0.02); }
+.fons-eff-tbl .fons-eff-dim { color: var(--muted); }
+.fons-dim { color: var(--muted); }
+.fons-eff-tbl .fons-eff-best { color: var(--success, #4caf7d); font-weight: 600; }
+.fons-eff-tbl .fons-eff-worst { color: var(--muted); }
+.bond-guide-tbl th:first-child { width: 14%; text-align: center; }
+.bond-guide-tbl th:nth-child(2) { width: 6%; text-align: left; }
+.bond-guide-tbl th:nth-child(3) { width: 22%; text-align: left; }
+.bond-guide-tbl th:nth-child(4) { width: 19%; text-align: left; }
+.bond-guide-tbl th:nth-child(5) { width: 9%; }
+.bond-guide-tbl th:nth-child(6) { width: 9%; }
+.bond-guide-tbl th:nth-child(7) { width: 8%; }
+.bond-guide-tbl th:last-child { width: 13%; }
+#bond-guide-table td.bond-guide-char { width: 14%; vertical-align: middle; font-weight: 600; text-align: center; overflow-wrap: anywhere; overflow: hidden; }
+#bond-guide-table td.bg-col-bond { width: 6%; text-align: left; color: var(--muted); }
+#bond-guide-table td.bg-col-item { width: 22%; text-align: left; }
+#bond-guide-table td.bg-col-loc { width: 19%; text-align: left; }
+#bond-guide-table td.bg-col-cost { width: 9%; text-align: right; }
+#bond-guide-table td.bg-col-gifts { width: 9%; text-align: right; }
+#bond-guide-table td.bg-col-days { width: 8%; text-align: right; }
+#bond-guide-table td.bg-col-total { width: 13%; text-align: right; }
+.bg-char-art { width: 64px; height: 64px; border-radius: 8px; overflow: hidden; background: #0a0c10; border: 1px solid var(--border); margin: 0 auto 8px; }
+.bg-char-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bg-char-note { font-size: 12px; font-weight: 400; color: var(--muted); margin-top: 2px; }
+.bg-checks { list-style: none; display: inline-flex; flex-direction: column; gap: 3px; margin-top: 8px; max-width: 100%; min-width: 0; text-align: left; font-size: 12px; font-weight: 400; color: var(--muted); }
+.bg-checks li { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+.bg-check-label { min-width: 0; overflow-wrap: anywhere; }
+.bg-check-mark { width: 12px; flex: 0 0 auto; font-weight: 700; text-align: center; }
+.bg-checks .ok .bg-check-mark { color: var(--success); }
+.bg-checks .no .bg-check-mark { color: var(--danger); }
+.bg-checks .no { opacity: 0.75; }
+.bg-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.bg-item { display: flex; align-items: center; gap: 10px; }
+.bg-item-icon { flex: 0 0 auto; width: 46px; height: 46px; border-radius: 7px; background: #c9ccd2; border: 1px solid #9aa0a8; overflow: hidden; }
+.bg-item-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bg-opts { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; margin: 4px 0 8px; }
+.bg-opt { display: flex; align-items: center; gap: 10px; }
+.bg-seg { margin-top: 0; }
+.bg-seg .seg-opt { padding: 5px 12px; font-size: 13px; }
+.bg-seg.disabled { opacity: 0.4; }
+.bg-opts-note { font-size: 13px; color: var(--muted); margin-bottom: 14px; display: flex; flex-direction: column; gap: 3px; }
+.bg-views { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; }
+.bg-views-label { font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+.bg-view-intro { font-size: 13px; color: var(--muted); margin-bottom: 14px; max-width: 1100px; }
+.bg-pri { background: var(--surface); border-radius: 10px; overflow: hidden; max-width: 1100px; margin-bottom: 16px; }
+.bg-pri-hdr { width: 100%; display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: none; border: 0; border-bottom: 1px solid var(--border); color: var(--muted); font: inherit; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; text-align: left; }
+.bg-pri-hdr:hover { color: var(--text); }
+.bg-pri-hdr:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.bg-pri-hdr svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; transition: transform 0.15s; transform: rotate(90deg); flex: 0 0 auto; }
+.bg-pri.collapsed .bg-pri-hdr { border-bottom: 0; }
+.bg-pri.collapsed .bg-pri-hdr svg { transform: rotate(0deg); }
+.bg-pri.collapsed .bg-pri-body { display: none; }
+.bg-pri-body { overflow-x: auto; }
+.bg-pri-tbl { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+.bg-pri-tbl thead tr { background: var(--surface2); }
+.bg-pri-tbl th { padding: 9px 14px; text-align: left; color: var(--muted); font-weight: 500; font-size: 12px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; }
+.bg-pri-tbl td { padding: 6px 14px; border-top: 1px solid var(--border); }
+.bg-pri-tbl tr:hover td { background: rgba(255,255,255,0.02); }
+.bg-pri-tbl .r { text-align: right; }
+.bg-pri-tbl .c { text-align: center; }
+.bg-pri-tbl .rank { width: 44px; color: var(--muted); font-size: 12px; }
+.bg-pri-who { display: flex; align-items: center; gap: 10px; }
+.bg-pri-pf { width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border); object-fit: cover; background: #0a0c10; flex: 0 0 auto; }
+.bg-pri-who .bg-item-icon { width: 32px; height: 32px; border-radius: 6px; }
+.bg-pri-date-ok { color: var(--success); font-weight: 700; }
+.bg-pri-date-no { color: var(--danger); font-weight: 700; }
+.bg-pri-dim { color: var(--muted); font-size: 12px; }
+.bg-note-line { display: flex; gap: 10px; }
+.bg-note-label { flex: 0 0 82px; color: var(--text); font-weight: 600; }
+.bg-note-foot { font-size: 12px; margin-top: 2px; }
+.bond-guide-tbl th { white-space: nowrap; }
+#page-bond-guide .fons-wide-wrap { overflow-x: auto; max-width: 1100px; }
+#bond-guide-table { min-width: 900px; }
+.bond-guide-tbl .bond-guide-block tr:not(.bond-guide-block-start) td { border-top: none; }
+.bond-guide-tbl tbody.bond-guide-block:hover td { background: rgba(255,255,255,0.02); }
+.bond-guide-tbl .bond-guide-empty td { text-align: center; color: var(--muted); padding: 24px 16px; }
+body { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+.bg-standalone { max-width: 1180px; margin: 0 auto; padding: 28px 16px 48px; }
+.bg-footer { margin-top: 28px; font-size: 12px; color: var(--muted); }
+.bg-footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+<main class="bg-standalone">
+  <div id="page-bond-guide">
+    <div class="page-header"><div class="page-title">Bond Guide</div><div class="page-sub">Made by: Shikaru</div></div>
+    <!-- Views: separate pages of the Bond Guide. Each view owns its own controls -- the cost
+         toggles below live inside the Cost Guide view and never touch Free Bond Priority. -->
+    <div class="bg-views">
+      <span class="bg-views-label">Views</span>
+      <div class="seg bg-seg" id="bg-view-seg" role="tablist">
+        <div class="seg-opt" role="tab" tabindex="0" data-view="cost">Cost Guide</div><div class="seg-opt" role="tab" tabindex="0" data-view="priority">Free Bond Priority</div>
+      </div>
+    </div>
+    <div id="bg-view-cost">
+    <div class="bg-view-intro">Best 100/200/400-bond gift item per character: where to get it and what it costs to take bond 0 → max.</div>
+    <!-- Calculation options. Both can be on at once; they only change the Gifts / Total Fons
+         columns (see bondGuideCost() in affinity.js). -->
+    <div class="bg-opts">
+      <div class="bg-opt">
+        <button class="toggle-btn" id="bg-zero-toggle" title="Apply Zero's gift life skill (rank 1-5): +5% bond from gifts while the recipient's bond level is at or below rank + 3. Off = no bonus">Zero Life Skill</button>
+        <div class="seg bg-seg" id="bg-zero-rank">
+          <div class="seg-opt" data-rank="1">1</div><div class="seg-opt" data-rank="2">2</div><div class="seg-opt" data-rank="3">3</div><div class="seg-opt" data-rank="4">4</div><div class="seg-opt" data-rank="5">5</div>
+        </div>
+      </div>
+      <div class="bg-opt">
+        <button class="toggle-btn" id="bg-date-toggle" title="Add one 200-bond date per day once bond level 4 is reached">Daily Dating (Lv 4+)</button>
+      </div>
+      <div class="bg-opt">
+        <button class="toggle-btn" id="bg-cloud-toggle" title="Give one free 400-bond Fluffy Cloud per day (0 Fons). It uses one of the day's 3 gift slots, leaving 2 for the bought gift">Free Fluffy Cloud</button>
+      </div>
+      <div class="bg-opt">
+        <button class="toggle-btn" id="bg-quest-toggle" title="Count each character&#39;s one-time quests, gestures and city encounters (+50 bond each), done at Lv 9">Quests &amp; Gestures</button>
+      </div>
+    </div>
+    <div class="bg-opts-note" id="bg-opts-note"></div>
+    <div class="fons-wide-wrap">
+      <table class="fons-eff-tbl bond-guide-tbl" id="bond-guide-table">
+        <thead><tr><th>Character</th><th>Bond</th><th>Item</th><th>Location</th><th>Cost / Unit</th><th>Gifts</th><th>Days</th><th>Total Fons</th></tr></thead>
+      </table>
+    </div>
+    </div>
+    <div id="bg-view-priority" hidden>
+      <div class="bg-view-intro">Who to spend free bond on (free clouds, dates, any free gift) to save the most Fons: characters whose gifts cost the most per bond come first. Ties are alphabetical.</div>
+      <div id="bg-priority-tables"></div>
+    </div>
+  </div>
+
+<p class="bg-footer">Built from the <a href="https://github.com/urakihs/NTEelie">NTEelie</a> planner's data on 2026-10-07. Fan-made; game names and images belong to their owners.<br>Made by: Shikaru</p>
+</main>
+<script src="data/affinity.js"></script>
+<script src="data/characters.js"></script>
+<script src="data/shopItems.js"></script>
+<script src="data/bondGuide.js"></script>
+<script src="data/icons.js"></script>
+<script>
+// Small stand-ins for app helpers the Bond Guide code uses.
+const fmtQty=(n)=>(parseInt(n,10)||0).toLocaleString('en-US');
+const charArtSrc=id=>'assets/icons/characters/'+id+'.png';
+// Bond Guide (Appendix): a player-maintained reference table (bondGuide.js ->
+// BOND_GUIDE_DB), joined against CHARACTER_DB for display names and sorted
+// alphabetically. Gifts / Days / Total Fons are CALCULATED, never stored: the cost of
+// taking bond 0 -> max (or the entry's maxBondLevel, e.g. Aurelia's 2) using only that item
+// (with Dating on, a combatDateLevel character -- Zankou -- dates from Lv 8 instead of 4; plus the one-time
+// oneTimeBond quests/gestures when that toggle is on; noDating characters skip the daily date), via bondGuideCost() (affinity.js). Two
+// options at the top of the page feed it (any combination can be on): Zero's gift life
+// skill rank (1-5), daily dating from bond level 4, and the free daily Fluffy Cloud. With all off the gift count is
+// ceil(BOND_CUM[BOND_MAX_LEVEL]/tierBond) -- rounded UP, since you can't buy a
+// fractional item -- times the flat cost-per-unit.
+function bgEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+// Page options, remembered per browser (a view preference, not save data). zeroRank
+// (1-5) starts at the player's own Zero rank when he has one, else 1. Zero toggled off
+// is the "rank 0 / no bonus" case, so there's no separate 0 option.
+const BG_OPTS_KEY='bondGuideOpts';
+let bgOpts=null;
+function bgLoadOpts(){
+  if(bgOpts)return bgOpts;
+  let o=null;
+  try{o=JSON.parse(localStorage.getItem(BG_OPTS_KEY)||'null');}catch{}
+  const own=(typeof zeroGiftRank==='function')?zeroGiftRank():0;
+  const r=o&&(o.zeroRank|0);
+  bgOpts={zeroOn:!!(o&&o.zeroOn),zeroRank:(r>=1&&r<=5)?r:(own>=1&&own<=5?own:1),dating:!!(o&&o.dating),freeCloud:!!(o&&o.freeCloud),quests:!!(o&&o.quests),
+    view:(o&&o.view==='priority')?'priority':'cost',collapsed:(o&&o.collapsed&&typeof o.collapsed==='object')?o.collapsed:{}};
+  return bgOpts;
+}
+function bgSaveOpts(){try{localStorage.setItem(BG_OPTS_KEY,JSON.stringify(bgOpts));}catch{}}
+function bgSyncOptsUI(){
+  const o=bgLoadOpts();
+  const zt=document.getElementById('bg-zero-toggle'),dt=document.getElementById('bg-date-toggle'),ct=document.getElementById('bg-cloud-toggle'),qt=document.getElementById('bg-quest-toggle'),seg=document.getElementById('bg-zero-rank');
+  if(!zt||!dt||!ct||!qt||!seg)return;
+  ct.classList.toggle('on',o.freeCloud);
+  qt.classList.toggle('on',o.quests);
+  zt.classList.toggle('on',o.zeroOn);
+  dt.classList.toggle('on',o.dating);
+  seg.classList.toggle('disabled',!o.zeroOn);
+  // No rank is highlighted while Zero is off, so the dimmed selector never reads as a live choice.
+  seg.querySelectorAll('.seg-opt').forEach(el=>el.classList.toggle('active',o.zeroOn&&Number(el.dataset.rank)===o.zeroRank));
+  // One short line per active option, then the gifts/day assumption as a footnote.
+  const line=(label,detail)=>`<div class="bg-note-line"><span class="bg-note-label">${label}</span>${detail}</div>`;
+  let html='';
+  if(o.zeroOn)html+=line(`Zero R${o.zeroRank}`,`+5% gift bond up to bond Lv ${bondZeroCap(o.zeroRank)}`);
+  if(o.dating)html+=line('Dating',`+${BOND_DATE_BOND} bond/day once bond Lv ${BOND_DATE_GATE_LEVEL} is reached (characters with city hangouts only)`);
+  if(o.freeCloud)html+=line('Free Cloud',`1 free ${BOND_FREE_CLOUD_BOND}-bond gift/day + ${BOND_GIFT_CAP-1} bought (Gifts &amp; Fons count bought only)`);
+  // Gestures unlock at Lv 4/6, so there's no dating gain from doing them early; Lv 9 keeps
+  // the most gifts inside Zero's +5% range and is never worse (see bondGuideCost).
+  if(o.quests)html+=line('Quests','One-time quests, gestures &amp; city encounters (+50 each), done at Lv 9.');
+  html+=`<div class="bg-note-foot">Based on ${BOND_GIFT_CAP} gifts/day per character.</div>`;
+  document.getElementById('bg-opts-note').innerHTML=html;
+}
+document.getElementById('bg-zero-toggle')?.addEventListener('click',()=>{bgLoadOpts().zeroOn=!bgOpts.zeroOn;bgSaveOpts();renderBondGuide();});
+document.getElementById('bg-date-toggle')?.addEventListener('click',()=>{bgLoadOpts().dating=!bgOpts.dating;bgSaveOpts();renderBondGuide();});
+document.getElementById('bg-cloud-toggle')?.addEventListener('click',()=>{bgLoadOpts().freeCloud=!bgOpts.freeCloud;bgSaveOpts();renderBondGuide();});
+document.getElementById('bg-quest-toggle')?.addEventListener('click',()=>{bgLoadOpts().quests=!bgOpts.quests;bgSaveOpts();renderBondGuide();});
+document.getElementById('bg-zero-rank')?.addEventListener('click',e=>{
+  const el=e.target.closest('.seg-opt');if(!el)return;
+  bgLoadOpts().zeroRank=Number(el.dataset.rank);bgOpts.zeroOn=true;bgSaveOpts();renderBondGuide(); // picking a rank turns Zero on
+});
+// Per-character checklist under the portrait: one row per toggle that's on AND varies by
+// character (Zero and the free cloud apply to everyone, so they get no row).
+function bgCharChecks(r,o){
+  const row=(ok,label)=>`<li class="${ok?'ok':'no'}"><span class="bg-check-mark" aria-hidden="true">${ok?'✓':'✗'}</span><span class="bg-check-label">${label}</span><span class="bg-sr"> ${ok?'(yes)':'(no)'}</span></li>`;
+  const items=[];
+  // A combat date (Zankou) is that character's daily date, so it shares the Dating row.
+  if(o.dating)items.push(r.combatDateLevel!=null?row(true,`Combat Date Lv ${bgEsc(r.combatDateLevel)}`):row(!r.noDating,'Dating'));
+  if(o.quests)items.push(row(r.oneTimeBond>0,r.oneTimeBond>0?`Quests &amp; Gestures +${fmtQty(r.oneTimeBond)}`:'Quests &amp; Gestures'));
+  return items.length?`<ul class="bg-checks">${items.join('')}</ul>`:'';
+}
+// Free Bond Priority view: every character ranked by their 400 / 200 / 100-bond gift cost
+// (highest first, ties alphabetical) -- a free gift or date saves the most Fons on whoever is
+// at the top. Static data only: the Cost Guide toggles (Zero, dating, cloud, quests) don't
+// apply here. Each table collapses from its header; the state is remembered per browser.
+const BG_PRI_TIERS=[400,200,100];
+function bgPriorityDates(g){
+  if(g.combatDateLevel!=null)return `<span class="bg-pri-date-ok" aria-hidden="true">✓</span> <span class="bg-pri-dim">Lv ${bgEsc(g.combatDateLevel)}+</span><span class="bg-sr">Combat date from Lv ${bgEsc(g.combatDateLevel)}</span>`;
+  if(g.noDating)return `<span class="bg-pri-date-no" aria-hidden="true">✗</span>${g.maxBondLevel!=null?` <span class="bg-pri-dim">max Lv ${bgEsc(g.maxBondLevel)}</span>`:''}<span class="bg-sr">Can't be dated</span>`;
+  return '<span class="bg-pri-date-ok" aria-hidden="true">✓</span><span class="bg-sr">Can be dated</span>';
+}
+function renderBondPriority(){
+  const host=document.getElementById('bg-priority-tables');
+  if(!host)return;
+  const o=bgLoadOpts();
+  const shopItem=id=>(typeof SHOP_ITEM_DB!=='undefined'&&id)?SHOP_ITEM_DB.find(i=>i.id===id):null;
+  const guide=typeof BOND_GUIDE_DB!=='undefined'?BOND_GUIDE_DB:[];
+  const chevron='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>';
+  host.innerHTML=BG_PRI_TIERS.map(tier=>{
+    const rows=guide.map(g=>{const c=CHARACTER_DB.find(c=>c.id===g.characterId);return {g,name:c?c.name:g.characterId,it:shopItem(g['item'+tier+'Id'])};})
+      .filter(r=>r.it&&r.it.costPerUnit)
+      .sort((a,b)=>b.it.costPerUnit-a.it.costPerUnit||a.name.localeCompare(b.name));
+    const collapsed=!!o.collapsed[tier];
+    const body=rows.map((r,i)=>{
+      const art=charArtSrc(r.g.characterId);
+      const icon=(typeof MAT_ICONS!=='undefined'&&MAT_ICONS[r.it.name])||'';
+      return `<tr><td class="rank">${i+1}</td>`+
+        `<td><div class="bg-pri-who">${art?`<img class="bg-pri-pf" src="${bgEsc(art)}" alt="" loading="lazy" onerror="this.remove()">`:''}${bgEsc(r.name)}</div></td>`+
+        `<td><div class="bg-pri-who"><div class="bg-item-icon">${icon?`<img src="${bgEsc(icon)}" alt="" loading="lazy">`:''}</div>${bgEsc(r.it.name)}</div></td>`+
+        `<td class="r">${fmtQty(r.it.costPerUnit)}</td><td class="r">${(r.it.costPerUnit/tier).toFixed(1)}</td><td class="c">${bgPriorityDates(r.g)}</td></tr>`;
+    }).join('');
+    return `<section class="bg-pri${collapsed?' collapsed':''}" data-tier="${tier}">`+
+      `<button type="button" class="bg-pri-hdr" aria-expanded="${!collapsed}" aria-controls="bg-pri-body-${tier}">${chevron}Ranked by ${tier}-bond gift</button>`+
+      `<div class="bg-pri-body" id="bg-pri-body-${tier}"><table class="bg-pri-tbl"><thead><tr><th>#</th><th>Character</th><th>${tier}-bond gift</th><th class="r">Cost</th><th class="r">Fons / bond</th><th class="c">Dates</th></tr></thead><tbody>${body}</tbody></table></div></section>`;
+  }).join('');
+}
+document.getElementById('bg-priority-tables')?.addEventListener('click',e=>{
+  const hdr=e.target.closest('.bg-pri-hdr');if(!hdr)return;
+  const sec=hdr.closest('.bg-pri');const tier=sec.dataset.tier;
+  const o=bgLoadOpts();o.collapsed={...o.collapsed,[tier]:!o.collapsed[tier]};bgSaveOpts();
+  sec.classList.toggle('collapsed',!!o.collapsed[tier]);hdr.setAttribute('aria-expanded',String(!o.collapsed[tier]));
+});
+function bgSetView(v){const o=bgLoadOpts();if(o.view===v)return;o.view=v;bgSaveOpts();renderBondGuide();}
+document.getElementById('bg-view-seg')?.addEventListener('click',e=>{const el=e.target.closest('.seg-opt');if(el)bgSetView(el.dataset.view);});
+document.getElementById('bg-view-seg')?.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const el=e.target.closest('.seg-opt');if(!el)return;e.preventDefault();bgSetView(el.dataset.view);});
+function renderBondGuide(){
+  const table=document.getElementById('bond-guide-table');
+  if(!table)return;
+  const view=bgLoadOpts().view;
+  document.querySelectorAll('#bg-view-seg .seg-opt').forEach(el=>{const on=el.dataset.view===view;el.classList.toggle('active',on);el.setAttribute('aria-selected',String(on));});
+  document.getElementById('bg-view-cost').hidden=view!=='cost';
+  document.getElementById('bg-view-priority').hidden=view!=='priority';
+  if(view==='priority'){renderBondPriority();return;}
+  bgSyncOptsUI();
+  const o=bgLoadOpts();
+  const calcOpts={zeroRank:o.zeroOn?o.zeroRank:0,dating:o.dating,freeCloud:o.freeCloud};
+  table.querySelectorAll('tbody').forEach(tb=>tb.remove()); // clear previous render
+  const shopItem=id=>(typeof SHOP_ITEM_DB!=='undefined'&&id)?SHOP_ITEM_DB.find(i=>i.id===id):null;
+  const tier=(it,bond,g)=>{
+    if(!it)return {bond};
+    const c=it.costPerUnit?bondGuideCost(bond,it.costPerUnit,{...calcOpts,maxLevel:g.maxBondLevel,combatDateLevel:g.combatDateLevel,noDating:!!g.noDating,oneTimeBond:o.quests?g.oneTimeBond:0}):null;
+    return {bond,name:it.name,location:it.location,cost:it.costPerUnit,
+      icon:(typeof MAT_ICONS!=='undefined'&&MAT_ICONS[it.name])||'',
+      gifts:c?c.gifts:undefined,days:c?c.days:undefined,total:c?c.fons:undefined};
+  };
+  const rows=(typeof BOND_GUIDE_DB!=='undefined'?BOND_GUIDE_DB:[]).map(g=>{
+    const c=CHARACTER_DB.find(c=>c.id===g.characterId);
+    return {name:c?c.name:g.characterId,art:charArtSrc(g.characterId),maxLevel:g.maxBondLevel,combatDateLevel:g.combatDateLevel,noDating:!!g.noDating,oneTimeBond:g.oneTimeBond|0,
+      tiers:[100,200,400].map(b=>tier(shopItem(g['item'+b+'Id']),b,g))};
+  }).sort((a,b)=>a.name.localeCompare(b.name));
+  if(!rows.length){table.insertAdjacentHTML('beforeend','<tbody><tr class="bond-guide-empty"><td colspan="8">No entries yet — add characters via the data editor\'s Bond Guide tab.</td></tr></tbody>');return;}
+  const dash=v=>(v===undefined||v===null||v==='')?'—':bgEsc(v);
+  const num=v=>(v===undefined||v===null||v==='')?'—':fmtQty(v);
+  const itemCell=t=>t.name
+    ?`<div class="bg-item"><div class="bg-item-icon">${t.icon?`<img src="${bgEsc(t.icon)}" alt="" loading="lazy">`:''}</div><span>${bgEsc(t.name)}</span></div>`
+    :'—';
+  const cells=t=>
+    `<td class="bg-col-bond">${t.bond}</td><td class="bg-col-item">${itemCell(t)}</td><td class="bg-col-loc">${dash(t.location)}</td>`+
+    `<td class="bg-col-cost">${num(t.cost)}</td><td class="bg-col-gifts">${num(t.gifts)}</td><td class="bg-col-days">${num(t.days)}</td>`+
+    `<td class="bg-col-total">${num(t.total)}</td>`;
+  // One <tbody> per character: its 100-bond row directly above its 200- and 400-bond
+  // rows (the Character cell spans all three via rowspan), so the tiers are easy to
+  // compare at a glance instead of living in separate tables far apart. Each column
+  // cell carries an explicit class (not nth-child) because rowspan removes the
+  // Character cell from the 200/400-bond rows' DOM position, which would otherwise
+  // shift nth-child-based styling by one column on those rows. A dedicated <tbody>
+  // per character (rather than one shared <tbody> for the whole table) also lets
+  // ":hover" highlight the whole 3-row block -- including the shared name cell --
+  // no matter which row is hovered.
+  const html=rows.map(r=>`<tbody class="bond-guide-block">`+
+    `<tr class="bond-guide-block-start"><td rowspan="3" class="bond-guide-char">${r.art?`<div class="bg-char-art"><img src="${bgEsc(r.art)}" alt="" loading="lazy" onerror="this.parentNode.remove()"></div>`:''}<div class="bg-char-name">${bgEsc(r.name)}</div>${r.maxLevel!=null?`<div class="bg-char-note">(Max bond Lv ${bgEsc(r.maxLevel)})</div>`:''}${bgCharChecks(r,o)}</td>${cells(r.tiers[0])}</tr>`+
+    `<tr>${cells(r.tiers[1])}</tr>`+
+    `<tr class="bond-guide-block-end">${cells(r.tiers[2])}</tr>`+
+    `</tbody>`).join('');
+  table.insertAdjacentHTML('beforeend',html);
+}
+
+renderBondGuide();
+</script>
+</body>
+</html>
