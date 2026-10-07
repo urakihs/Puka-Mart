@@ -14,10 +14,6 @@
   --border: #2a2d35; --accent: #e8b84b; --accent-hover: #f0c860; --accent2: #4b8ee8;
   --text: #e8eaf0; --muted: #9ba3b4; --success: #4be89a; --danger: #e84b6b;
   --rank-s: #e8b84b; --rank-a: #934be8; --rank-b: #4b8ee8;
-  --sidebar-w: 225px;
-  --sidebar-w-collapsed: 52px;
-  --screen-base: #0e1015;      /* Pull History backdrop base fill, one step warmer than --bg */
-  --ghost-ink: rgba(255, 255, 255, 0.04);
 }
 .page-header { margin-bottom: 24px; }
 .page-title { font-size: 24px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); }
@@ -174,10 +170,10 @@ body { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; b
 <script src="data/bondGuide.js"></script>
 <script src="data/icons.js"></script>
 <script>
-// Small stand-ins for app helpers the Bond Guide code uses.
+// Formatting and portrait helpers.
 const fmtQty=(n)=>(parseInt(n,10)||0).toLocaleString('en-US');
 const charArtSrc=id=>'assets/icons/characters/'+id+'.png';
-// Bond Guide (Appendix): a player-maintained reference table (bondGuide.js ->
+// Bond Guide: a player-maintained reference table (bondGuide.js ->
 // BOND_GUIDE_DB), joined against CHARACTER_DB for display names and sorted
 // alphabetically. Gifts / Days / Total Fons are CALCULATED, never stored: the cost of
 // taking bond 0 -> max (or the entry's maxBondLevel, e.g. Aurelia's 2) using only that item
@@ -188,8 +184,8 @@ const charArtSrc=id=>'assets/icons/characters/'+id+'.png';
 // ceil(BOND_CUM[BOND_MAX_LEVEL]/tierBond) -- rounded UP, since you can't buy a
 // fractional item -- times the flat cost-per-unit.
 function bgEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-// Page options, remembered per browser (a view preference, not save data). zeroRank
-// (1-5) starts at the player's own Zero rank when he has one, else 1. Zero toggled off
+// Page options, remembered per browser. zeroRank
+// (1-5) starts at 1. Zero toggled off
 // is the "rank 0 / no bonus" case, so there's no separate 0 option.
 const BG_OPTS_KEY='bondGuideOpts';
 let bgOpts=null;
@@ -197,9 +193,8 @@ function bgLoadOpts(){
   if(bgOpts)return bgOpts;
   let o=null;
   try{o=JSON.parse(localStorage.getItem(BG_OPTS_KEY)||'null');}catch{}
-  const own=(typeof zeroGiftRank==='function')?zeroGiftRank():0;
   const r=o&&(o.zeroRank|0);
-  bgOpts={zeroOn:!!(o&&o.zeroOn),zeroRank:(r>=1&&r<=5)?r:(own>=1&&own<=5?own:1),dating:!!(o&&o.dating),freeCloud:!!(o&&o.freeCloud),quests:!!(o&&o.quests),
+  bgOpts={zeroOn:!!(o&&o.zeroOn),zeroRank:(r>=1&&r<=5)?r:1,dating:!!(o&&o.dating),freeCloud:!!(o&&o.freeCloud),quests:!!(o&&o.quests),
     view:(o&&o.view==='priority')?'priority':'cost',collapsed:(o&&o.collapsed&&typeof o.collapsed==='object')?o.collapsed:{}};
   return bgOpts;
 }
@@ -314,7 +309,7 @@ function renderBondGuide(){
     return {name:c?c.name:g.characterId,art:charArtSrc(g.characterId),maxLevel:g.maxBondLevel,combatDateLevel:g.combatDateLevel,noDating:!!g.noDating,oneTimeBond:g.oneTimeBond|0,
       tiers:[100,200,400].map(b=>tier(shopItem(g['item'+b+'Id']),b,g))};
   }).sort((a,b)=>a.name.localeCompare(b.name));
-  if(!rows.length){table.insertAdjacentHTML('beforeend','<tbody><tr class="bond-guide-empty"><td colspan="8">No entries yet — add characters via the data editor\'s Bond Guide tab.</td></tr></tbody>');return;}
+  if(!rows.length){table.insertAdjacentHTML('beforeend','<tbody><tr class="bond-guide-empty"><td colspan="8">No entries yet — add characters in data/bondGuide.js.</td></tr></tbody>');return;}
   const dash=v=>(v===undefined||v===null||v==='')?'—':bgEsc(v);
   const num=v=>(v===undefined||v===null||v==='')?'—':fmtQty(v);
   const itemCell=t=>t.name

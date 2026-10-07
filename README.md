@@ -1,6 +1,6 @@
 # NTE Bond Guide
 
-A standalone copy of the Bond Guide from the [NTEelie](https://github.com/urakihs/NTEelie) planner for Neverness to Everness.
+A bond guide for Neverness to Everness. Made by Shikaru.
 
 - **Cost Guide** — the cheapest 100-, 200- and 400-bond gift for every character, where to buy it, and how many gifts, days and Fons it takes to go from bond 0 to max. Toggles for Zero's life skill, daily dating, the free Fluffy Cloud, and one-time quests & gestures.
 - **Free Bond Priority** — every character ranked by gift cost, so you know who to spend free clouds and dates on to save the most Fons.
